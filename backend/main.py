@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from routes.match import router as match_router
-
 
 app = FastAPI()
 
@@ -9,16 +7,13 @@ app = FastAPI()
 def read_root():
     return {"message": "Welcome to ResuMatch API"}
 
-# Include your /api endpoints
 app.include_router(match_router, prefix="/api")
+from fastapi.middleware.cors import CORSMiddleware
 
-# CORS for frontend-backend connection
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In dev, allow all
+    allow_origins=["*"],  # Allow all origins for development
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
 )
-
-
